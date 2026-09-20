@@ -24,6 +24,10 @@
     // Routing happens in the browser, so any path that is not a file must
     // return index.html with a 200 — not a 404. This is what lets a patient
     // open /j/<token> or /review/<token> straight from WhatsApp.
+    //
+    // This replaces the `_redirects` file used on Pages. Do not add one back:
+    // Workers rejects `/* /index.html 200` as an infinite loop, because
+    // /index.html itself matches /*. This setting is the supported mechanism.
     "not_found_handling": "single-page-application"
   }
 }

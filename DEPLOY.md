@@ -274,8 +274,10 @@ The API is not on `api.thespcofficial.com`, or `COOKIE_DOMAIN` is missing.
 Step 4.
 
 **A patient's meeting link shows a 404.**
-The `_redirects` file did not make it into the build. Confirm
-`frontend/public/_redirects` exists and the Pages output directory is `dist`.
+SPA routing is off. `wrangler.jsonc` must have
+`"not_found_handling": "single-page-application"` inside `assets`. Do not add a
+`_redirects` file with `/* /index.html 200` — Workers rejects it as an infinite
+loop, since /index.html matches /*.
 
 **Video connects but the picture is black.**
 No TURN server. Step 6.
