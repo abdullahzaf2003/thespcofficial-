@@ -1,0 +1,10 @@
+# Cloudflare Pages SPA fallback.
+#
+# Routing happens in the browser (frontend/src/App.tsx), so the host must serve
+# index.html for any path it does not recognise as a file. Without this rule a
+# patient opening their meeting link (/j/<token>) or review link
+# (/review/<token>) straight from WhatsApp gets a 404 — the app would only work
+# if you navigated from the home page first.
+#
+# 200 (not 301) so the URL in the address bar is preserved for the router.
+/*    /index.html   200

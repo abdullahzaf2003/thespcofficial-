@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e ' *)",
+      "Bash(pkill -f \"node server/index.js\")",
+      "Bash(cp server/clinic.db /tmp/claude-1000/-home-aaa-Downloads-Finalize-design/1cc37ff3-24e4-4399-a1e8-d906358afd39/scratchpad/clinic.db.bak)",
+      "Bash(timeout 20 node server/index.js)",
+      "Bash(timeout 15 node server/index.js)",
+      "Bash(echo \"exit=$?\")",
+      "Bash(mkdir -p \"/tmp/claude-1000/-home-aaa-Downloads-Finalize-design/1cc37ff3-24e4-4399-a1e8-d906358afd39/scratchpad\")",
+      "Bash(timeout 120 node scripts/e2e-booking-video.mjs)",
+      "Bash(pnpm --version)",
+      "Bash(pkill -f \"serve[r]/index.js\")",
+      "Bash(set -e)",
+      "Bash(mv server/clinic.db-shm backend/data/clinic.db-shm)",
+      "Bash(mv server/clinic.db-wal backend/data/clinic.db-wal)",
+      "Bash(mkdir -p docs)",
+      "Bash(mv frontend/public/content/site-content.xlsx docs/site-content.xlsx)",
+      "Bash(grep -v '^\\\\.$')",
+      "Bash(npx tsc *)",
+      "Bash(timeout 200 npm run build)"
+    ]
+  }
+}

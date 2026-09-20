@@ -1,0 +1,10 @@
+{
+  "description": "Create stunning, customized designs effortlessly with this user-friendly web application, perfect for businesses and individuals seeking professional visuals.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

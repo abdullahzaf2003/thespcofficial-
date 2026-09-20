@@ -1,0 +1,16 @@
+# Security headers for the static site (Cloudflare Pages reads this file).
+#
+# The API sets its own headers via helmet; these cover the pages themselves.
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(self), camera=(self)
+  Strict-Transport-Security: max-age=15552000; includeSubDomains
+
+# Hashed build assets never change, so they can be cached indefinitely.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/brand/*
+  Cache-Control: public, max-age=604800
