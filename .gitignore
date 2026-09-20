@@ -30,3 +30,7 @@ logs/
 
 # Uploaded images (user content, not part of the build)
 backend/data/uploads/
+
+# This project uses pnpm (see .mise.toml and the Figma harness). A stray
+# npm lockfile makes the package manager ambiguous for the deploy builder.
+package-lock.json
