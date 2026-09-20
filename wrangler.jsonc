@@ -1,0 +1,29 @@
+{
+  // Cloudflare Workers static-asset deployment for the three frontends.
+  //
+  // Cloudflare now steers new projects to Workers rather than Pages, and as of
+  // 2026 Workers has parity for static sites — including `_headers` and
+  // `_redirects`, which are picked up from the asset directory as before.
+  //
+  // All three properties (website, dashboard, doctor panel) are the SAME build;
+  // the app chooses which to render from window.location.hostname. So this one
+  // config serves all three, and each Cloudflare project overrides the worker
+  // name in its deploy command:
+  //
+  //   npx wrangler deploy --name spc-website
+  //   npx wrangler deploy --name spc-dashboard
+  //   npx wrangler deploy --name spc-doctor
+  //
+  // Without the override they would all deploy over the top of each other.
+  "name": "spc-website",
+  "compatibility_date": "2026-09-21",
+
+  "assets": {
+    "directory": "./dist",
+
+    // Routing happens in the browser, so any path that is not a file must
+    // return index.html with a 200 — not a 404. This is what lets a patient
+    // open /j/<token> or /review/<token> straight from WhatsApp.
+    "not_found_handling": "single-page-application"
+  }
+}

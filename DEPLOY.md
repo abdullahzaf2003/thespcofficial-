@@ -171,19 +171,27 @@ You want `{"status":"ok",...}`. Do not continue until you see it.
 
 ## Step 5 — Deploy the three websites
 
-All three are the same code; the app decides which one to show from the
-address it is opened at. You create three Pages projects from one repo.
+Cloudflare now puts new projects on **Workers** rather than Pages. Workers has
+parity for static sites, including the `_headers` and `_redirects` files in
+`frontend/public/`, so that is what we use. `wrangler.jsonc` at the repo root
+configures it.
 
-For **each** of the three, in Cloudflare → *Workers & Pages* → *Create* →
-*Pages* → *Connect to Git* → pick the repo, then:
+All three properties are the *same build* — the app picks which one to render
+from the address it is opened at. So you create three Workers projects from one
+repo, identical except for the name and the domain.
+
+For **each** of the three: Cloudflare → *Workers & Pages* → *Create* → *Import
+a repository* → pick `thespcofficial-`, then:
 
 | Setting | Value |
 |---|---|
 | Build command | `npm run build` |
-| Build output directory | `dist` |
-| Node version (env var `NODE_VERSION`) | `22` |
+| Deploy command | `npx wrangler deploy --name <PROJECT NAME>` |
 
-And add these three build-time variables to **all three** projects:
+The `--name` override matters. Without it all three deploy over the top of each
+other, because they share one `wrangler.jsonc`.
+
+Add these three build variables to **all three** projects:
 
 ```
 VITE_API_BASE=https://api.thespcofficial.com
@@ -191,21 +199,20 @@ VITE_ADMIN_HOST=03084213201.thespcofficial.com
 VITE_DOCTOR_HOST=03224894179.thespcofficial.com
 ```
 
-Name the projects so you can tell them apart, e.g. `spc-website`,
-`spc-dashboard`, `spc-doctor`.
+Every copy has to recognise all three addresses, which is why the hostnames go
+on all three and not just their own.
 
-Then attach one domain to each — *Custom domains* → *Set up a domain*:
+| Project name | Deploy command | Domain to attach |
+|---|---|---|
+| `spc-website` | `npx wrangler deploy --name spc-website` | `thespcofficial.com` + `www.thespcofficial.com` |
+| `spc-dashboard` | `npx wrangler deploy --name spc-dashboard` | `03084213201.thespcofficial.com` |
+| `spc-doctor` | `npx wrangler deploy --name spc-doctor` | `03224894179.thespcofficial.com` |
 
-| Project | Domain |
-|---|---|
-| `spc-website` | `thespcofficial.com` **and** `www.thespcofficial.com` |
-| `spc-dashboard` | `03084213201.thespcofficial.com` |
-| `spc-doctor` | `03224894179.thespcofficial.com` |
+Attach the domains afterwards under the project's *Settings → Domains &
+Routes → Add → Custom domain*. Cloudflare creates the DNS records itself.
 
-Cloudflare creates the DNS records itself. These **can** stay orange-clouded —
-the proxy is fine for static pages, it is only the API that must be grey.
-
----
+These **can** stay proxied (orange cloud) — the proxy is fine for static pages.
+It was only the API that had to be grey.
 
 ## Step 6 — TURN, before any real consultation
 
